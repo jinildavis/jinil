@@ -1,0 +1,266 @@
+<div style="width: 80%;padding: 5%;">
+	<h3>ADD NEW QUOTATION</h3>
+	<!-- <mat-horizontal-stepper labelPosition="bottom" linear>
+		<mat-step label="Basic Information"
+				completed="true">
+			<p>Basic Details</p>
+		</mat-step>
+		<mat-step label="Container Details"
+				completed="false" optional>
+			<p>Container Details</p>
+			<div>
+				<button mat-button matStepperPrevious>
+					Back
+				</button>
+				<button mat-button matStepperNext>
+					Next
+				</button>
+			</div>
+		</mat-step>
+		<mat-step label="Terms & Condition"
+				completed="false">
+			<p>Terms & Condition</p>
+		</mat-step>
+	</mat-horizontal-stepper> -->
+	
+
+
+
+<mat-stepper #stepper >
+  <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
+    <form [formGroup]="firstFormGroup" >
+      <ng-template matStepLabel>Basic Information</ng-template>
+       <mat-form-field appearance="fill" style="width: 120%;">
+<!-- 
+        <div class="searchbar">
+          <div class="bar">
+              <input type="text" #searchbar [(ngModel)]="searchInput" (keyup)="fetchSeries(searchbar.value)" placeholder="Search Here" />
+          </div>
+          <ul>
+                <li *ngFor="let show of searchResult" (click)="showDetails(show)" [hidden]="toggle" >
+                <p> {{ show.name }}</p>
+                </li>
+          </ul>
+          <div *ngIf="toggle" class="details">
+            
+           </div>
+          </div> -->
+
+
+        <!-- <form class="example-form">
+          <input  type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [formControl]="control"
+          [matAutocomplete]="auto">
+   <mat-autocomplete #auto="matAutocomplete">
+     <mat-option *ngFor="let line of linearr "  [value]="line.name">
+       {{line.code}}
+     </mat-option>
+   </mat-autocomplete>
+  </form> -->
+  <!-- <div class="row">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Assignee</mat-label>
+      
+      </mat-form-field>
+    </form>
+  </div> -->
+        <div class="row">
+              <div class="col-md-3 mb-2">
+                    <mat-label>Reference No </mat-label> <br>
+                    <mat-label>  {{this.referenceNo}}  </mat-label> 
+              </div>
+               <div class="col-md-3 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>LINE</mat-label>
+                  <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto" required="true">
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                      {{option.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+
+              </div>
+              <div class="col-md-3 mb-2">
+                <mat-form-field appearance="fill">
+                <mat-label>POL AGENT</mat-label> 
+                <input type="text" matInput [formControl]="myControlpol" [matAutocomplete]="auto1" required>
+                  <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnPol">
+                    <mat-option *ngFor="let optionpol of filteredOptionspol | async" [value]="optionpol">
+                      {{optionpol.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+              </mat-form-field>
+              </div> 
+              <div class="col-md-3 mb-2">
+               
+              </div> 
+            </div>
+            <div class="row" >
+            
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="fill" style="width: 80%;">
+                    <mat-label>POD AGENT</mat-label> 
+                    <input matInput placeholder="" formControlName="podagent" value="{{this.podSelectedPort}}" width="100%" > 
+                   
+                  </mat-form-field>     
+                  <button mat-raised-button color="accent" (click)="showPrompt()" >SER</button> 
+              </div>
+             
+              <div class="col-md-6 mb-2" width="100%">
+                <mat-form-field appearance="fill" width="100%">
+                <mat-label>Party</mat-label> 
+                <mat-select>
+                  <mat-option *ngFor="let Party of PartyArr" [value]="Party.party">
+                    {{Party.partyName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>     
+              </div> 
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>From Date</mat-label>
+                  <input matInput [matDatepicker]="pickerFrom">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>Valid Till</mat-label>
+                  <input matInput [matDatepicker]="pickerTo">
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+              </div>
+          <div class="col-md-3 mb-2">
+            
+            <mat-form-field appearance="fill">
+              <mat-label>Currency</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let food of CurrArr" [value]="food.code">
+                  {{food.code}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+      </div>
+            </div>
+            <br>
+            <div class="row"  class="col-md-12 mb-1">  <mat-label>Transit details</mat-label> 
+            </div>
+
+            <div class="row" >
+            
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>POL</mat-label>
+                  <input type="text" matInput [formControl]="myControlpol" [matAutocomplete]="auto2" required>
+                  <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFnPol">
+                    <mat-option *ngFor="let optionpol of filteredOptionspol | async" [value]="optionpol">
+                      {{optionpol.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+             
+              <div class="col-md-6 mb-2" width="100%">
+                <mat-form-field appearance="fill">
+                  <mat-label>POD</mat-label>
+                  <input type="text" matInput [formControl]="myControlpol" [matAutocomplete]="auto3" required>
+                  <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFnPol">
+                    <mat-option *ngFor="let optionpol of filteredOptionspol | async" [value]="optionpol">
+                      {{optionpol.name}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>     
+              </div> 
+            </div>
+            <br>
+            <div class="row"  class="col-md-12 mb-1">  <mat-label>Cargo details</mat-label> 
+            </div>
+            <div class="row" >
+            
+              <div class="col-md-4 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>Cargo Type</mat-label>
+                  <mat-select>
+                    <mat-option *ngFor="let cargo of CargoArr" [value]="cargo.code">
+                      {{cargo.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>Stuffing Type</mat-label>
+                  <mat-select>
+                    <mat-option *ngFor="let cargo of StuffingArr" [value]="cargo.code">
+                      {{cargo.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="col-md-4 mb-2">
+                  <mat-form-field appearance="fill">
+                    <mat-label>De Stuffing Type</mat-label>
+                    <mat-select>
+                      <mat-option *ngFor="let cargo of DestuffingArr" [value]="cargo.code">
+                        {{cargo.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            
+      </mat-form-field>
+
+      <button (click)="createQuote()" class="btn btn-success">SAVE</button>
+      
+
+      <div>
+        <p>Go to a different step to see the error state</p>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Container details</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Address</mat-label>
+        <input matInput placeholder="Ex. 1 Main St, New York, NY" formControlName="secondCtrl"
+               required>
+      </mat-form-field>
+      <div>
+        <p>Go to a different step to see the error state</p>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Terms & condition</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+
+
+</div>
+
