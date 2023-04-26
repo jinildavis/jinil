@@ -1,0 +1,267 @@
+<div style="width: 80%;padding: 5%;">
+	<h3>ADD NEW QUOTATION</h3>
+	<!-- <mat-horizontal-stepper labelPosition="bottom" linear>
+		<mat-step label="Basic Information"
+				completed="true">
+			<p>Basic Details</p>
+		</mat-step>
+		<mat-step label="Container Details"
+				completed="false" optional>
+			<p>Container Details</p>
+			<div>
+				<button mat-button matStepperPrevious>
+					Back
+				</button>
+				<button mat-button matStepperNext>
+					Next
+				</button>
+			</div>
+		</mat-step>
+		<mat-step label="Terms & Condition"
+				completed="false">
+			<p>Terms & Condition</p>
+		</mat-step>
+	</mat-horizontal-stepper> -->
+	
+
+
+
+<mat-stepper #stepper >
+  <mat-step [stepControl]="firstFormGroup" >
+    <form [formGroup]="firstFormGroup" >
+      <ng-template matStepLabel>Basic Information</ng-template>
+       <!-- <mat-form-field appearance="fill" style="width: 120%;"> -->
+
+        <div class="row">
+              <div class="col-md-3 mb-2">
+                    <mat-label>Reference No </mat-label> <br>
+                    <mat-label>  {{this.addQuote.ref_number}}  </mat-label> 
+                 
+              </div>
+               <div class="col-md-3 mb-2">
+               
+                
+                <mat-form-field appearance="fill">
+                  <mat-label>LINE</mat-label>
+                  <input type="text"  matInput [formControl]="myControl" [matAutocomplete]="auto" required>
+                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="onSelectionChanged($event)"  >
+                    <mat-option *ngFor="let option1 of filteredOptions | async" [value]="option1" >
+                      {{option1.code}}
+                    </mat-option>
+                  </mat-autocomplete>
+                 
+                </mat-form-field>
+              
+                
+
+              </div>
+              <div class="col-md-6 mb-2">
+                <mat-form-field appearance="fill" >
+                  <mat-label>POL AGENT</mat-label> 
+                  <input type="text" matInput [formControl]="myControlpol" [matAutocomplete]="auto1" required>
+                    <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnPol"  (optionSelected)="onSelectionChangedpol($event)">
+                      <mat-option *ngFor="let optionpol of filteredOptionspol | async" [value]="optionpol">
+                        {{optionpol.code}}
+                      </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field> 
+          
+              </div> 
+              <!-- <div class="col-md-3 mb-2">
+               
+              </div>  -->
+            </div>
+             <div class="row" >
+            
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="fill" style="width: 80%;">
+                    <mat-label>POD AGENT</mat-label> 
+                    <input matInput placeholder="" formControlName="podagent" value="{{this.podSelectedPort}}" width="100%" > 
+                   
+                  </mat-form-field>     
+                  <button mat-raised-button color="accent" (click)="showPrompt()" >SER</button> 
+              </div>
+             
+              <div class="col-md-6 mb-2" width="100%">
+                <mat-form-field appearance="fill" width="100%">
+                <mat-label>Party</mat-label> 
+                <mat-select formControlName="party" (selectionChange)="selectedParty($event.value)" required>
+                  <mat-option *ngFor="let Party of PartyArr" [value]="Party.party" >
+                    {{Party.partyName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>     
+              </div> 
+            </div>
+
+            <div class="row">
+              <div class="col-md-3 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>From Date</mat-label>
+                  <input matInput [matDatepicker]="pickerFrom" (dateChange)="fromDateChange($event)" required>
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerFrom></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-3 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>Valid Till</mat-label>
+                  <input matInput [matDatepicker]="pickerTo" (dateChange)="toDateChange($event)" required>
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+                  <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerTo></mat-datepicker>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="full-width" appearance="fill">
+                  <mat-label>Choose a date</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    (click)="picker.open()"
+                    [formControl]="selectedDate"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+
+
+
+              </div>
+          <div class="col-md-3 mb-2">
+            
+            <mat-form-field appearance="fill">
+              <mat-label>Currency</mat-label>
+              <mat-select (selectionChange)="selectedCurrency($event.value)" required>
+                <mat-option *ngFor="let food of CurrArr" [value]="food.id" >
+                  {{food.code}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          
+      </div>
+            </div>
+            <br>
+            <div class="row"  class="col-md-12 mb-1">  <mat-label>Transit details</mat-label> 
+            </div>
+
+            <div class="row" >
+            
+              <div class="col-md-6 mb-3">
+                <mat-form-field appearance="fill">
+                  <mat-label>POL</mat-label>
+                  <input type="text" matInput [formControl]="myControlTpol" [matAutocomplete]="autoTpol" required>
+                  <mat-autocomplete #autoTpol="matAutocomplete" [displayWith]="displayFnPol"  (optionSelected)="onSelectionChangedTPol($event)">
+                    <mat-option *ngFor="let optionpol of filteredOptionsTpol | async" [value]="optionpol">
+                      {{optionpol.code}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+             
+              <div class="col-md-6 mb-2" width="100%">
+                <mat-form-field appearance="fill">
+                  <mat-label>POD</mat-label>
+                  <input type="text" matInput [formControl]="myControlTpod" [matAutocomplete]="autoTpod" required>
+                  <mat-autocomplete #autoTpod="matAutocomplete" [displayWith]="displayFnPol"  (optionSelected)="onSelectionChangedTPod($event)">
+                    <mat-option *ngFor="let optionTpod of filteredOptionsTpod | async" [value]="optionTpod">
+                      {{optionTpod.code}}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>     
+              </div> 
+            </div>
+            <br>
+            <div class="row"  class="col-md-12 mb-1">  <mat-label>Cargo details</mat-label> 
+            </div>
+       
+            <div class="row" >
+            
+              <div class="col-md-4 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>Cargo Type</mat-label>
+                  <mat-select (selectionChange)="selectedCargoType($event.value)" required>
+                    <mat-option *ngFor="let cargo of CargoArr" [value]="cargo.id" >
+                      {{cargo.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4 mb-2">
+                <mat-form-field appearance="fill">
+                  <mat-label>Stuffing Type</mat-label>
+                  <mat-select (selectionChange)="selectedStuffingType($event.value)" required>
+                    <mat-option *ngFor="let cargo of StuffingArr" [value]="cargo.id" >
+                      {{cargo.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="col-md-4 mb-2">
+                  <mat-form-field appearance="fill">
+                    <mat-label>De Stuffing Type</mat-label>
+                    <mat-select (selectionChange)="selectedDeStuffingType($event.value)" required>
+                      <mat-option *ngFor="let cargo of DestuffingArr" [value]="cargo.id" >
+                        {{cargo.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div> 
+            
+            <div class="row"  class="col-md-12 mb-1"> 
+              
+        <button (click)="createQuote()" class="btn btn-success">SAVE</button>
+            </div>
+     
+      <!-- </mat-form-field> -->
+
+      
+
+      <div>
+        <p>Go to a different step to see the error state</p>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Container details</ng-template>
+      <div class="row">
+        <div class="col-md-3 mb-2">
+          <mat-form-field appearance="fill">
+            <mat-label>Container Type</mat-label>
+            <mat-select (selectionChange)="selectedContainerType($event.value)">
+              <mat-option *ngFor="let cnt of ContainerArr" [value]="cnt.id" >
+                {{cnt.nickname}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+           
+        </div>
+      </div>
+      <div>
+        <p>Go to a different step to see the error state</p>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Terms & condition</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
+
+
+</div>
+

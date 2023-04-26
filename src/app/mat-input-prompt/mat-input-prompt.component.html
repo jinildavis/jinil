@@ -1,0 +1,74 @@
+<div class="form-container">
+    <h2 mat-dialog-title>Agent Details</h2>
+    <mat-dialog-content>
+      <form [formGroup]="form">
+        <!-- <mat-form-field >
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter your name" formControlName="name" />
+        </mat-form-field>
+  
+        <mat-form-field>
+          <mat-label>Address</mat-label>
+          <textarea
+            matInput
+            placeholder="Address"
+            formControlName="address"
+          ></textarea>
+        </mat-form-field> -->
+  
+        <mat-form-field appearance="fill" hintLabel="Search with">
+          <mat-label>TYPE</mat-label>
+          <mat-select >
+            <mat-option value="PORT">PORT</mat-option>
+            <mat-option value="LICD">LICD</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>PORT</mat-label> 
+            <input type="text" matInput [formControl]="myControlpod" [matAutocomplete]="auto1">
+              <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFnPod"  (optionSelected)='getPosts($event.option.value)'>
+                <mat-option *ngFor="let optionpod of filteredOptionspod | async" [value]="optionpod" >
+                  {{optionpod.code}}
+                </mat-option>
+              </mat-autocomplete>
+          </mat-form-field>
+          <button class="btn btn-success" (click)="search()">
+            SEARCH
+          </button>
+          <BR>
+
+            <div > 
+              <div class="row" style="padding: 1%;background-color: grey;">
+              <div class="col-md-2 mb-1">OFFICE ID</div>
+              <div class="col-md-6 mb-1">NAME</div>  
+              <div class="col-md-2 mb-1">CODE</div>
+              <div class="col-md-2 mb-1">SELECT</div>
+            </div>
+            <div  *ngFor="let list of officeArray">
+              <div class="row" style="padding: 1%;background-color:#4d3d868c;">
+              <div class="col-md-2 mb-1">{{list.officeId}}</div>
+              <div class="col-md-6 mb-1" >{{list.officeName}}</div>
+              <div class="col-md-2 mb-1">{{list.officeCode}}</div>
+              <div class="col-md-2 mb-1"><button mat-raised-button color="primary" (click)="submit(list)">
+                SELECT
+              </button> </div>
+            </div>
+          </div>
+          </div>
+
+           
+            
+
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-raised-button (click)="dialogRef.close(false)" color="primary">
+        Close
+      </button>
+      <!-- <button mat-raised-button color="primary" (click)="submit(form.value)">
+        Submit
+      </button>  -->
+    </mat-dialog-actions>
+  </div>
+  

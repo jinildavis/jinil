@@ -1,0 +1,9 @@
+<BR>
+<h3> STUFFING LIST</h3>
+<ul class="heroes">
+  <li *ngFor="let list of stuffing">
+ <a routerLink="/detail/{{list.id}}">
+<span class="badge">{{list.id}}</span> {{list.name}}
+</a>
+  </li>
+</ul>

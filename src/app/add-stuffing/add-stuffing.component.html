@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      Add Stuffing
+    </div>
+    <div class="card-body">
+
+    <div>
+    <div class="submit-form">
+      <!-- *ngIf="!submitted" -->
+      <div>  
+        <div class="form-group">
+          <label for="name">NAME</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            required
+            [(ngModel)]="postStuffing.name"
+            name="name"
+          />
+        </div>
+        <div class="form-group">
+            <label for="description">CODE</label>
+            <input
+              class="form-control"
+              id="code"
+              required
+              [(ngModel)]="postStuffing.code"
+              name="code"
+            />
+          </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input
+            class="form-control"
+            id="description"
+            required
+            [(ngModel)]="postStuffing.description"
+            name="description"
+          />
+        </div>
+        <div class="form-group">
+            <label for="description">methodType</label>
+            <!-- <input
+              class="form-control"
+              id="methodType"
+              required
+              [(ngModel)]="postStuffing.methodType"
+              name="methodType"
+            /> -->
+            <select [(ngModel)]="selectedMethodValue">
+              <option value="ST">STUFFING</option>
+              <option value="DS">DE-STUFFING</option>
+            </select>
+          </div>
+  
+        <button (click)="saveStuffing()" class="btn btn-success">Submit
+        </button>
+        
+      </div>
+      <div *ngIf="submitted" class="btn btn-success">Stuffing created successfully</div>
+      <app-stuffinglist></app-stuffinglist>
+    </div>
+  </div>
+</div>
+</div>
+</div>
